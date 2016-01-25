@@ -1,0 +1,78 @@
+<div class="row" xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1">
+    <link rel="stylesheet" href="/css/vote.css" />
+    <div class="col-lg-10" t:render="permission">
+        <div class="panel panel-primary" t:render="postPanel">
+            <div class="panel-heading">
+                <h3 class="panel-title"><t:slot name="title" /></h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                <div class="col-xs-1 text-center">
+                    <span><t:attr name="class"><t:slot name="upVoteClassName" /></t:attr><t:attr name="data-post-id"><t:slot name="postId" /></t:attr></span><br/>
+                    <span class="points"><t:slot name="points"/></span><br/>
+                    <span><t:attr name="class"><t:slot name="downVoteClassName" /></t:attr><t:attr name="data-post-id"><t:slot name="postId" /></t:attr></span>
+                </div>
+                <div class="col-xs-11">
+                <p><t:slot name="body" /></p>
+                <a><t:attr name="href"><t:slot name="profileLink"/></t:attr><t:slot name="userName"/></a> | <t:slot name="timestamp"/> | <a class="btn btn-xs" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Share this post via private message</a>
+                    <div class="collapse" id="collapseExample">
+                        <div id="shareAlert" />
+                        <form action="#" method="POST" class="form-inline" id="shareForm">
+                            <div class="form-group">
+                                <label>Send to</label>
+                                <input name="username" class="form-control"/>
+                            </div>
+                            <input type="hidden" name="postId"><t:attr name="value"><span t:render="postId" /></t:attr></input>
+                            <button type="submit" class="btn btn-default">Share post</button>
+                        </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-heading">
+                <h3 class="panel-title">Add Comment</h3>
+            </div>
+            <div class="panel-body">
+                <div id="alert" />
+                <form action="#" method="POST" id="commentForm" t:render="addCommentPanel">
+                    <div class="form-group">
+                        <label>Comment</label>
+                        <textarea class="form-control" name="body" rows="2"></textarea>
+                        <input type="hidden" name="id"><t:attr name="value"><span t:render="postId" /></t:attr></input>
+                        <button type="submit" class="btn btn-default">Reply</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title">Comments</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel" t:render="commentPanel">
+                <div class="panel-body">
+                    <div class="row">
+                    <div class="col-xs-1 text-center">
+                        <span><t:attr name="class"><t:slot name="upVoteClassName" /></t:attr><t:attr name="data-comment-id"><t:slot name="commentId" /></t:attr></span><br/>
+                        <span class="points"><t:slot name="points"/></span><br/>
+                        <span><t:attr name="class"><t:slot name="downVoteClassName" /></t:attr><t:attr name="data-comment-id"><t:slot name="commentId" /></t:attr></span>
+                    </div>
+                    <div class="col-xs-11">
+                    <p><t:slot name="body" /></p>
+                    <a><t:attr name="href"><t:slot name="profileLink"/></t:attr><t:slot name="userName"/></a> | <t:slot name="timestamp"/>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-2 well">
+        <a href="submit" class="btn btn-block btn-success">Submit post</a>
+    </div>
+    <script src="/js/vote.js"></script>
+    <script src="/js/post.js"></script>
+</div>

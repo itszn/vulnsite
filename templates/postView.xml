@@ -1,0 +1,35 @@
+<div class="row" xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1">
+    <link rel="stylesheet" href="/css/vote.css" />
+    <div class="col-lg-10">
+        <div class="panel" t:render="postPanel">
+            <div class="panel-body">
+                <div class="row">
+                <div class="col-xs-1 text-center">
+                    <span><t:attr name="class"><t:slot name="upVoteClassName" /></t:attr><t:attr name="data-post-id"><t:slot name="postId" /></t:attr></span><br/>
+                    <span class="points"><t:slot name="points"/></span><br/>
+                    <span><t:attr name="class"><t:slot name="downVoteClassName" /></t:attr><t:attr name="data-post-id"><t:slot name="postId" /></t:attr></span>
+                </div>
+                <div class="col-xs-11">
+                <h4><a><t:attr name="href"><t:slot name="postLink" /></t:attr><t:slot name="title" /></a></h4>
+                <a><t:attr name="href"><t:slot name="profileLink"/></t:attr><t:slot name="userName"/></a> | <a><t:attr name="href"><t:slot name="postLink"/></t:attr><t:slot name="numComments" /> Comments</a> | <t:slot name="timestamp"/>
+                </div>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul class="pagination" t:render="pageNums">
+                <li><t:attr name="class"><t:slot name="backclass" /></t:attr>
+                    <a aria-label="Previous"><t:attr name="href"><t:slot name="backlink" /></t:attr>&lt;</a>
+                </li>
+                <li class="active"><a href="#"><t:slot name="page"/></a></li>
+                <li>
+                    <a aria-label="Next"><t:attr name="href"><t:slot name="forlink" /></t:attr>&gt;</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-2 well">
+        <a href="/submit" class="btn btn-block btn-success">Submit post</a>
+    </div>
+    <script src="/js/vote.js"></script>
+</div>

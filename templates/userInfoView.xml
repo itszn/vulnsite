@@ -1,0 +1,8 @@
+<ul class="nav navbar-nav navbar-right" xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1">
+<li t:render="userInfo"><a><t:attr name="href"><t:slot name="link" /></t:attr>
+    <t:slot name="name" />: Points <t:slot name="points" />
+</a></li>
+<li><t:attr name="class"><t:slot name="className" /></t:attr><a href="/messages">Messages <span class="badge">
+<t:slot name="notes" /></span></a></li>
+<li><a href="/api/logout">Logout</a></li>
+</ul>

@@ -1,0 +1,11 @@
+.upvote.active {
+    color: orange;
+}
+
+.downvote.active {
+    color: blue;
+}
+
+.vote {
+    cursor: pointer;
+}

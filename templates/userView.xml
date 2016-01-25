@@ -1,0 +1,51 @@
+<div class="row" xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1" t:render="userInfo">
+    <div class="col-xs-4 text-center">
+        <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Username</h3>
+        </div>
+        <div class="panel-body">
+            <h4><t:slot name="name"/></h4>
+        </div>
+        </div>
+    </div>
+    <div class="col-xs-4 text-center">
+        <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Points</h3>
+        </div>
+        <div class="panel-body">
+            <h4><t:slot name="points"/></h4>
+        </div>
+        </div>
+    </div>
+    <div class="col-xs-4 text-center">
+        <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Status</h3>
+        </div>
+        <div class="panel-body">
+            <h4><t:slot name="status"/></h4>
+        </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="panel panel-warning">
+        <div class="panel-heading">
+            <h3 class="panel-title">Send A Message To <span><t:slot name="name" /></span></h3>
+        </div>
+        <div class="panel-body" t:render="loggedInTag">
+            <div id="alert" />
+            <form id="sUserForm" action="#" method="POST">
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="body" class="form-control" rows="6"/>
+                </div>
+                <input type="hidden" name="id"><t:attr name="value"><t:slot name="userId"/></t:attr></input>
+                <button type="submit" class="btn btn-success">Send</button>
+            </form>
+        </div>
+        </div>
+    </div>
+    <script src="/js/message.js"></script>
+</div>
