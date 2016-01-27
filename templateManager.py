@@ -1,15 +1,21 @@
+import random
+
 from twisted.web.template import Element, renderer, XMLFile,XMLString
 from twisted.python.filepath import FilePath
 from twisted.web.template import flattenString
 
 import globalVals
 
-def reqWriteCallback(data, req):
+def reqWriteCallback(data, req, rawFormats):
+    if rawFormats!=None:
+        for key,rep in rawFormats.formats.items():
+            data = str(data.replace(key,rep))
     req.write(data)
     req.finish()
 
-def writeTemplate(template, request):
-    flattenString(request, template).addCallback(reqWriteCallback, request)
+def writeTemplate(template, request, rawFormats=None):
+    print rawFormats
+    flattenString(request, template).addCallback(reqWriteCallback, request, rawFormats)
 
 class MainTemplate(Element):
     loader = XMLFile(FilePath('templates/main.xml'))
@@ -75,3 +81,11 @@ class AlertTemplate(Element):
             alertClass='alert alert-'+self.alertType,
             alertText=self.alertText
         )
+
+class RawFormat(Element):
+    formats = {}
+
+    def addFormat(self, data):
+        key = '%032x'%random.getrandbits(128)
+        self.formats[key]=data
+        return key

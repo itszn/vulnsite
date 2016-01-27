@@ -1,5 +1,6 @@
 import json
 import time
+import re
 
 from twisted.web import resource,server
 
@@ -31,7 +32,7 @@ class Api(resource.Resource):
         elif apiurl[:3]==['post','comment','add']:
             return self.addComment(req, user)
 
-        return return json.dumps({'error':'Invalid request'})
+        return json.dumps({'error':'Invalid request'})
 
     def render_POST(self, req):
         sess = req.getSession()
@@ -54,7 +55,9 @@ class Api(resource.Resource):
             return self.sharePost(req, user)
         elif apiurl[:3]==['post','link','submit']:
             return self.sendLink(req, user)
-        return return json.dumps({'error':'Invalid request'})
+        elif apiurl[:4]==['moderator','message','send','format']:
+            return self.addRawMessage(req, user)
+        return json.dumps({'error':'Invalid request'})
 
     def login(self, req, user):
         if not 'name' in req.args or not 'pass' in req.args:
@@ -154,7 +157,34 @@ class Api(resource.Resource):
 
         if not globalVals.db.sendMessage(user, userId, req.args['body'][0]):
             return json.dumps({'error':'User does not exist'})
+        if globalVals.sim.admin.userId==userId:
+            globalVals.sim.adminRespond(user)
         return json.dumps({'success':'true','user':userId})
+
+
+    def addRawMessage(self, req, user):
+        if not user.loggedIn:
+            return json.dumps({'error':'Please login first.'})
+        if not user.permission>0:
+            return json.dumps({'error':'Only moderators+ may use this...'})
+        if not 'name' in req.args or not 'body' in req.args:
+            return json.dumps({'error':'Missing arguments'})
+        if req.args['body'][0]=='':
+            return json.dumps({'error':'Body cannot by null'})
+
+        if re.search('< *script.*>',req.args['body'][0],re.I)!=None:
+            return json.dumps({'error':'No script tags allowed'})
+
+        userId = globalVals.db.getUserIdByName(req.args['name'][0])
+        if userId==None:
+            return json.dumps({'error':'Could not find user'})
+        if not globalVals.db.sendMessage(user, userId, req.args['body'][0],raw=True):
+            return json.dumps({'error':'User does not exist'})
+        print "Sending raw message"
+        if globalVals.sim.admin.userId==userId:
+            globalVals.sim.adminRespond(user)
+        return json.dumps({'success':'true','user':userId})
+
 
     def sharePost(self, req, user):
         if not user.loggedIn:

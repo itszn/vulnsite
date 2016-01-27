@@ -70,8 +70,17 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-2 well">
-        <a href="submit" class="btn btn-block btn-success">Submit post</a>
+    <div class="col-md-2 well">
+        <a href="/submit" class="btn btn-block btn-success">Submit text post</a>
+        <a href="/submit" class="btn btn-block btn-success">Submit link</a>
+        <p><b>Welcome!</b></p>
+        <p>Me and my friend were having a hard time getting recognition for our contributions to <a href="https://reddit.com/r/r2memes">/r/r2memes</a> over at reddit, so I read some coding tutorials online and wrote my own reddit!</p>
+        <p>Now I can be the admin, and my friend gets to be the important moderator he always wanted to be. Its a win-win!</p>
+        <p><b>Rules</b></p>
+        <p>We are very picky about the memes on our site, so the moderator will visit every link you give him to make sure it is up to snuff.</p>
+        <p>Text posts don't really matter, so knock yourself out.</p>
+        <p>I will also make sure to check my messages too. We might even have a nice conversation!</p>
+        <p>Other than that, have fun!</p>
     </div>
     <script src="/js/vote.js"></script>
     <script src="/js/post.js"></script>

@@ -5,10 +5,10 @@ from twisted.web.template import Element, renderer, XMLFile,flattenString,tags
 from twisted.python.filepath import FilePath
 
 from mainserver import IUser, startSession, User
-from templateManager import writeTemplate, MainTemplate
+from templateManager import writeTemplate, MainTemplate, RawFormat
 import globalVals
 
-class UserView(Element):
+class MessagesView(RawFormat):
     loader = XMLFile(FilePath('templates/messageView.xml'))
 
     def __init__(self, user):
@@ -25,10 +25,14 @@ class UserView(Element):
             yield "Sorry, no messages yet."
         
         for m in messages:
-            body = tags.p()
-            for s in m['body'].split('\n'):
-                body(s)
-                body(tags.br)
+            if not m['raw']==1:
+                body = tags.p()
+                for s in m['body'].split('\n'):
+                    body(s)
+                    body(tags.br)
+            else:
+                body = self.addFormat(m['body'].replace('\n','<br />'))
+
             nt = tag.clone().fillSlots(
                 body=body,
                 userName=m['fromName'],
@@ -46,9 +50,12 @@ class MessagesPage(resource.Resource):
             req.redirect('/login')
             return ''
         
+
+        rawView = MessagesView(user)
         writeTemplate(
-            MainTemplate("Messages", user, UserView(user)),
-            req
+            MainTemplate("Messages", user, rawView),
+            req,
+            rawView
         )
         return server.NOT_DONE_YET
 

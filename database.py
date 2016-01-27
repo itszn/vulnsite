@@ -219,12 +219,12 @@ class Database(object):
             globalVals.commentCache.invalidateCache(post)
         return True
 
-    def sendMessage(self, user, to, body):
+    def sendMessage(self, user, to, body, raw=False):
         cu = self.cur.execute("SELECT `numNots` FROM `user` WHERE `id`=?",(to,)).fetchone()
         if cu==None:
             return False
-        self.cur.execute("INSERT INTO `message` (`to`,`from`,`fromName`,`body`,`time`) VALUES (?,?,?,?,?)",
-            (to, user.userId, user.userName, body, int(time.time()) ))
+        self.cur.execute("INSERT INTO `message` (`to`,`from`,`fromName`,`body`,`time`,`raw`) VALUES (?,?,?,?,?,?)",
+            (to, user.userId, user.userName, body, int(time.time()), 1 if raw else 0 ))
         self.cur.execute("UPDATE `user` SET `numNots`=? WHERE `id`=?",(cu[0]+1,to,))
         self.conn.commit()
         globalVals.userNotifCache.invalidateCache(to)

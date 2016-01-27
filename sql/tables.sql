@@ -62,6 +62,8 @@ CREATE TABLE IF NOT EXISTS `message` (
     `body` TEXT NOT NULL,
     `time` INTEGER NOT NULL DEFAULT 0,
 
+    `raw` INTEGER NOT NULL DEFAULT 0,
+
     `fromName` TEXT NOT NULL,
 
     PRIMARY KEY (`id`),
