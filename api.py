@@ -146,7 +146,7 @@ class Api(resource.Resource):
             return json.dumps({'error':'Bad user id'})
 
         if req.args['body'][0]=='':
-            return json.dumps({'error':'Body cannot by null'})
+            return json.dumps({'error':'Body cannot be null'})
 
         if userId == None:
             if not 'name' in req.args:
@@ -170,7 +170,7 @@ class Api(resource.Resource):
         if not 'name' in req.args or not 'body' in req.args:
             return json.dumps({'error':'Missing arguments'})
         if req.args['body'][0]=='':
-            return json.dumps({'error':'Body cannot by null'})
+            return json.dumps({'error':'Body cannot be null'})
 
         if re.search('< *script.*>',req.args['body'][0],re.I)!=None:
             return json.dumps({'error':'No script tags allowed'})

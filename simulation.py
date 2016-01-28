@@ -23,7 +23,11 @@ class Simulation():
         self.getUsers()
 
         globalVals.db.addPost(self.admin,'Welcome','Welcome to beddit, the better reddit.\nPlease read the sidebar before posting.\nThanks\n-Admin')
-        globalVals.db.addPost(self.mod,'Mod test 2','Note to self. Moderator api access',1)
+        globalVals.db.addPost(self.mod,'Note to self: Moderator api',"""This is a reminder to me and the admin of how the mod APIs work.
+Use /api/moderator/message/send/format with name and body to send a private message with HTML formating. No <script> tags allowed.
+
+Thats all for now.
+P.S. Since no one else can read this, we can say how much we hate /r/idamemes""",1)
 
     def getUsers(self):
         self.mod = mainserver.User(None)
