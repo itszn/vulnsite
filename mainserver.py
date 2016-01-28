@@ -1,4 +1,8 @@
+import os
+import pwd
+import grp
 import argparse
+
 from twisted.web import server, resource, static, script
 from twisted.internet import reactor
 
@@ -32,6 +36,25 @@ def startSession():
         registerAdapter(User, Session, IUser)
         startedSession = True
 
+def drop_privileges(uid_name='nobody', gid_name='nogroup'):
+    if os.getuid() != 0:
+        # We're not root so, like, whatever dude
+        return
+
+    # Get the uid/gid from the name
+    running_uid = pwd.getpwnam(uid_name).pw_uid
+    running_gid = grp.getgrnam(gid_name).gr_gid
+
+    # Remove group privileges
+    os.setgroups([])
+
+    # Try setting the new uid/gid
+    os.setgid(running_gid)
+    os.setuid(running_uid)
+
+    # Ensure a very conservative umask
+    old_umask = os.umask(077)
+
 def startServer():
     ap = argparse.ArgumentParser(description='Server options')
     ap.add_argument('--clean',action='store_true',default=False)
@@ -51,6 +74,7 @@ def startServer():
 
     site = server.Site(root, logPath=b"access.log")
     reactor.listenTCP(args.port, site)
+    drop_privileges('rpisec','rpisec')
     reactor.run()
 
 if __name__ == "__main__":
