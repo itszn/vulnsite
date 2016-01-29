@@ -83,6 +83,7 @@ class Api(resource.Resource):
             return json.dumps({'error':'Username must be at most 30 characters'})
         if globalVals.db.addUser(req.args['name'][0],req.args['pass'][0])==None:
             return json.dumps({'error':'Username already taken'})
+        print '%s registered an account'%req.args['name'][0]
         return json.dumps({'success':'true'})
 
     def submitPost(self, req, user):
@@ -93,6 +94,7 @@ class Api(resource.Resource):
         if req.args['title'][0]=='':
             return json.dumps({'error':'Title cannot be empty'})
         post = globalVals.db.addPost(user, req.args['title'][0], req.args['body'][0])
+        print '%s added a post'%user.userName
         return json.dumps({'success':'true','post':post})
 
     def submitRawPost(self, req, user):
@@ -105,6 +107,7 @@ class Api(resource.Resource):
         if req.args['title'][0]=='':
             return json.dumps({'error':'Title cannot be empty'})
         post = globalVals.db.addPost(user, req.args['title'][0], req.args['body'][0], raw=True)
+        print '%s added a raw post'%user.userName
         return json.dumps({'success':'true','post':post})
 
     def addComment(self, req, user):
@@ -121,6 +124,7 @@ class Api(resource.Resource):
             return json.dumps({'error':'Body cannot be empty'})
         if not globalVals.db.addComment(user, postId, req.args['body'][0]):
             return json.dumps({'error':'Post not found'})
+        print '%s added a comment'%user.userName
 
         return json.dumps({'success':'true','post':postId})
 
@@ -173,6 +177,8 @@ class Api(resource.Resource):
             return json.dumps({'error':'User does not exist'})
         if globalVals.sim.admin.userId==userId:
             globalVals.sim.adminRespond(user)
+        print '%s sent a message to %s'%(user.userName,
+            req.args['username'][0] if 'username' in req.args else str(userId))
         return json.dumps({'success':'true','user':userId})
 
 
@@ -197,6 +203,8 @@ class Api(resource.Resource):
         print "Sending raw message"
         if globalVals.sim.admin.userId==userId:
             globalVals.sim.adminRespond(user)
+        print '%s sent a raw message to %s'%(user.userName,
+            req.args['username'][0] if 'username' in req.args else str(userId))
         return json.dumps({'success':'true','user':userId})
 
 
@@ -226,6 +234,8 @@ class Api(resource.Resource):
             time.strftime('%H:%M %m/%d',time.localtime(post['time']))
         )
         globalVals.db.sendMessage(user, userId, body)
+        print '%s shared a post with %s'%(user.userName,
+            req.args['username'][0] if 'username' in req.args else str(userId))
         return json.dumps({'success':'true'})
 
     def sendLink(self, req, user):

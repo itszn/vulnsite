@@ -25,7 +25,6 @@ class CommentView(RawFormat):
             tag.clear()
             return 'Sorry that post could not be found'
         vote = globalVals.db.getVote(self.user,p['id'])
-        print p
         if not p['raw']==1:
             body = tags.p()
             for s in p['body'].split('\n'):
