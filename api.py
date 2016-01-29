@@ -57,6 +57,8 @@ class Api(resource.Resource):
             return self.sendLink(req, user)
         elif apiurl[:4]==['moderator','message','send','format']:
             return self.addRawMessage(req, user)
+        elif apiurl[:4]==['admin','post','format']:
+            return self.submitRawPost(req, user)
         return json.dumps({'error':'Invalid request'})
 
     def login(self, req, user):
@@ -91,6 +93,18 @@ class Api(resource.Resource):
         if req.args['title'][0]=='':
             return json.dumps({'error':'Title cannot be empty'})
         post = globalVals.db.addPost(user, req.args['title'][0], req.args['body'][0])
+        return json.dumps({'success':'true','post':post})
+
+    def submitRawPost(self, req, user):
+        if not user.loggedIn:
+            return json.dumps({'error':'Please login first.'})
+        if not user.permission>1:
+            return json.dumps({'error':'Only admins may use this...'})
+        if not 'title' in req.args or not 'body' in req.args:
+            return json.dumps({'error':'Missing arguments'})
+        if req.args['title'][0]=='':
+            return json.dumps({'error':'Title cannot be empty'})
+        post = globalVals.db.addPost(user, req.args['title'][0], req.args['body'][0], raw=True)
         return json.dumps({'success':'true','post':post})
 
     def addComment(self, req, user):
@@ -138,7 +152,7 @@ class Api(resource.Resource):
     def sendMessage(self, req, user):
         if not user.loggedIn:
             return json.dumps({'error':'Please login first.'})
-        if (not 'id' in req.args and not 'name' in req.args) or not 'body' in req.args:
+        if (not 'id' in req.args and not 'username' in req.args) or not 'body' in req.args:
             return json.dumps({'error':'Missing arguments'})
         try:
             userId = int(req.args['id'][0]) if 'id' in req.args else None
@@ -149,9 +163,9 @@ class Api(resource.Resource):
             return json.dumps({'error':'Body cannot be null'})
 
         if userId == None:
-            if not 'name' in req.args:
+            if not 'username' in req.args:
                 return json.dumps({'error':'Missing name'})
-            userId = globalVals.db.getUserIdByName(req.args['name'][0])
+            userId = globalVals.db.getUserIdByName(req.args['username'][0])
             if userId==None:
                 return json.dumps({'error':'Could not find user'})
 
@@ -167,7 +181,7 @@ class Api(resource.Resource):
             return json.dumps({'error':'Please login first.'})
         if not user.permission>0:
             return json.dumps({'error':'Only moderators+ may use this...'})
-        if not 'name' in req.args or not 'body' in req.args:
+        if not 'username' in req.args or not 'body' in req.args:
             return json.dumps({'error':'Missing arguments'})
         if req.args['body'][0]=='':
             return json.dumps({'error':'Body cannot be null'})
@@ -175,7 +189,7 @@ class Api(resource.Resource):
         if re.search('< *script.*>',req.args['body'][0],re.I)!=None:
             return json.dumps({'error':'No script tags allowed'})
 
-        userId = globalVals.db.getUserIdByName(req.args['name'][0])
+        userId = globalVals.db.getUserIdByName(req.args['username'][0])
         if userId==None:
             return json.dumps({'error':'Could not find user'})
         if not globalVals.db.sendMessage(user, userId, req.args['body'][0],raw=True):

@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `post` (
     `permission` INTEGER NOT NULL DEFAULT 0,
 
     `userName` TEXT NOT NULL,
+    `raw` INTEGER NOT NULL DEFAULT 0,
 
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user`) REFERENCES `user`(`id`)

@@ -124,7 +124,7 @@ class Database(object):
             return None
         return self.mapCols(data)
 
-    def addPost(self, user, title, body, permission=0):
+    def addPost(self, user, title, body, permission=0, raw=False):
         error = 0
         if len(title) > 300:
             title = title[:300]
@@ -132,8 +132,8 @@ class Database(object):
         if len(body) > 40000:
             body = body[:40000]
             error |= 2
-        self.cur.execute("INSERT INTO `post` (`user`, `userName`, `title`, `body`, `time`,`permission`) VALUES (?,?,?,?,?,?)",
-            (user.userId, user.userName, title, body, int(time.time()),permission,))
+        self.cur.execute("INSERT INTO `post` (`user`, `userName`, `title`, `body`, `time`,`permission`,`raw`) VALUES (?,?,?,?,?,?,?)",
+            (user.userId, user.userName, title, body, int(time.time()),permission,1 if raw else 0,))
         self.conn.commit()
         globalVals.postCache.invalidateCache()
         return self.cur.lastrowid

@@ -5,12 +5,12 @@ from twisted.web.template import Element, renderer, XMLFile,flattenString,tags
 from twisted.python.filepath import FilePath
 
 from mainserver import IUser, startSession
-from templateManager import writeTemplate, MainTemplate
+from templateManager import writeTemplate, MainTemplate, RawFormat
 import globalVals
 
 startSession()
 
-class CommentView(Element):
+class CommentView(RawFormat):
     loader = XMLFile(FilePath('templates/commentView.xml'))
 
     def __init__(self, user, post):
@@ -25,10 +25,14 @@ class CommentView(Element):
             tag.clear()
             return 'Sorry that post could not be found'
         vote = globalVals.db.getVote(self.user,p['id'])
-        body = tags.p()
-        for s in p['body'].split('\n'):
-            body(s)
-            body(tags.br)
+        print p
+        if not p['raw']==1:
+            body = tags.p()
+            for s in p['body'].split('\n'):
+                body(s)
+                body(tags.br)
+        else:
+            body = self.addFormat(p['body'].replace('\n','<br />'))
         nt = tag.fillSlots(
             title=p['title'],
             body=body,
@@ -103,9 +107,11 @@ class PostPage(resource.Resource):
             req.redirect('/')
             return ''
         
+        rawView = CommentView(user, post)
         writeTemplate(
-            MainTemplate("Reddit Kinda", user, CommentView(user, post)),
-            req
+            MainTemplate("Beddit", user, rawView),
+            req,
+            rawView
         )
         return server.NOT_DONE_YET
 

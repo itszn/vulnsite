@@ -28,9 +28,9 @@
             </ul>
         </nav>
     </div>
-    <div class="col-md-2 well">
+    <div class="col-lg-2 well">
         <a href="/submit" class="btn btn-block btn-success">Submit text post</a>
-        <a href="/submit" class="btn btn-block btn-success">Submit link</a>
+        <a href="/submit" class="btn btn-block btn-success">Submit link</a><br />
         <p><b>Welcome!</b></p>
         <p>Me and my friend were having a hard time getting recognition for our contributions to <a href="https://reddit.com/r/r2memes">/r/r2memes</a> over at reddit, so I read some coding tutorials online and wrote my own reddit!</p>
         <p>Now I can be the admin, and my friend gets to be the important moderator he always wanted to be. Its a win-win!</p>

@@ -1,5 +1,5 @@
 <div class="row" xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1" t:render="userInfo">
-    <div class="col-xs-4 text-center">
+    <div class="col-lg-4 text-center">
         <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">Username</h3>
@@ -9,7 +9,7 @@
         </div>
         </div>
     </div>
-    <div class="col-xs-4 text-center">
+    <div class="col-lg-4 text-center">
         <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">Points</h3>
@@ -19,7 +19,7 @@
         </div>
         </div>
     </div>
-    <div class="col-xs-4 text-center">
+    <div class="col-lg-4 text-center">
         <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">Status</h3>

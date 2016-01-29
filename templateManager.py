@@ -14,7 +14,6 @@ def reqWriteCallback(data, req, rawFormats):
     req.finish()
 
 def writeTemplate(template, request, rawFormats=None):
-    print rawFormats
     flattenString(request, template).addCallback(reqWriteCallback, request, rawFormats)
 
 class MainTemplate(Element):

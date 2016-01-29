@@ -33,7 +33,7 @@ $('#gUserForm').submit(function(evt) {
         type:'POST',
         data:{
             body:document.getElementsByName('body')[0].value,
-            name:document.getElementsByName('name')[0].value
+            username:document.getElementsByName('name')[0].value
         },
         dataType:'json',
         success:function(data) {

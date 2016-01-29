@@ -19,15 +19,15 @@ class Simulation():
 
     def clean(self):
         globalVals.db.addUser('moderator',MODERATOR_PASS,1)
-        globalVals.db.addUser('admin',ADMIN_PASS,1)
+        globalVals.db.addUser('admin',ADMIN_PASS,2)
         self.getUsers()
 
-        globalVals.db.addPost(self.admin,'Welcome','Welcome to beddit, the better reddit.\nPlease read the sidebar before posting.\nThanks\n-Admin')
+        globalVals.db.addPost(self.admin,'Welcome','<h3>Welcome to Beddit</h3>Beddit is the better reddit.\nPlease read the sidebar before posting.\n<i>Thanks</i>\n-<b><font color="red">Admin</font></b>')
         globalVals.db.addPost(self.mod,'Note to self: Moderator api',"""This is a reminder to me and the admin of how the mod APIs work.
-Use /api/moderator/message/send/format with name and body to send a private message with HTML formating. No <script> tags allowed.
+Use POST to /api/moderator/message/send/format with 'username' and 'body' to send a private message with HTML formating. No <script> tags allowed.
 
-Thats all for now.
-P.S. Since no one else can read this, we can say how much we hate /r/idamemes""",1)
+Admin can POST to /api/admin/post/format with 'title' and 'body' to create a post with HTML formating.
+Thats all for now.""",1)
 
     def getUsers(self):
         self.mod = mainserver.User(None)
@@ -81,4 +81,4 @@ P.S. Since no one else can read this, we can say how much we hate /r/idamemes"""
 
     def adminSendResponse(self, user):
         globalVals.db.sendMessage(self.admin, user.userId,
-            "Test\n<b><font color=\"red\">ADMIN</font>",raw=True)
+            "Thanks for the message.\n<b><font color=\"red\">ADMIN</font>",raw=True)

@@ -59,7 +59,7 @@ class IndexPage(resource.Resource):
             page = 1
         
         writeTemplate(
-            MainTemplate("Reddit Kinda", user, PostView(user,page)),
+            MainTemplate("Beddit", user, PostView(user,page)),
             req
         )
         return server.NOT_DONE_YET
