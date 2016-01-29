@@ -22,7 +22,7 @@ class Simulation():
         globalVals.db.addUser('admin',ADMIN_PASS,2)
         self.getUsers()
 
-        globalVals.db.addPost(self.admin,'Welcome','<h3>Welcome to Beddit</h3>Beddit is the better reddit.\nPlease read the sidebar before posting.\n<i>Thanks</i>\n-<b><font color="red">Admin</font></b>')
+        globalVals.db.addPost(self.admin,'Welcome','<h3>Welcome to Beddit</h3>Beddit is the better reddit.\nPlease read the sidebar before posting.\n<i>Thanks</i>\n-<b><font color="red">Admin</font></b>', raw=True)
         globalVals.db.addPost(self.mod,'Note to self: Moderator api',"""This is a reminder to me and the admin of how the mod APIs work.
 Use POST to /api/moderator/message/send/format with 'username' and 'body' to send a private message with HTML formating. No <script> tags allowed.
 
