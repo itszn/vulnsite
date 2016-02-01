@@ -27,7 +27,7 @@ There are two bots that can be interacted with:
 * **Moderator:** This bot will visit all link posts that are submitted.
 * **Admin:** This bot will view its private messages every time one is sent to it.
 
-It is possible to escalte your privlages all the way to admin on this site.
+It is possible to escalate your privlages all the way to admin on this site.
 
 [Bother me on irc](https://rpis.ec/irc) if you have questions.
 
