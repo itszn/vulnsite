@@ -1,13 +1,14 @@
 import subprocess
 import time
+import random
 
 from twisted.internet import reactor
 
 import mainserver
 import globalVals
 
-MODERATOR_PASS = '49e834007bd16087601dbc6c603dd2505eb2dabcc57a1f60860dff900251b94d'
-ADMIN_PASS = '49e834007bd16087601dbc6c603dd2505eb2dabcc57a1f60860dff900251b94d'
+MODERATOR_PASS = '%064x'%random.getrandbits(256)
+ADMIN_PASS = '%064x'%random.getrandbits(256)
 
 
 class Simulation():
