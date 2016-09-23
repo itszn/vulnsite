@@ -10,6 +10,7 @@ var userid = system.args[3];
 var userurl = system.args[4]
 
 console.log(userid+' Starting')
+console.log(domain)
 
 var page = require('webpage').create();
 page.userAgent = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36";
@@ -19,6 +20,16 @@ page.onAlert = function(msg) {
 page.onUrlChanged = function(url) {
     console.log(userid+' Went to page: '+url);
 }
+
+page.onResourceRequested = function(request) {
+    console.log('Requested ' + request.url);
+    //console.log('Requested ' + JSON.stringify(request, undefined, 4));
+}
+/*
+page.onResourceReceived = function(request) {
+    console.log('Request ' + JSON.stringify(request, undefined, 4));
+}
+*/
 
 var login = function() { 
     page.open(
