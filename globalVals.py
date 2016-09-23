@@ -26,3 +26,6 @@ def init(_args,_root):
 
     global sim
     sim = simulation.Simulation(clean=args.clean)
+
+    global conf
+    conf = {"startingPoints":0}

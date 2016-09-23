@@ -93,6 +93,7 @@ class CommentView(RawFormat):
         return tag
 
 
+
 class PostPage(resource.Resource):
     def render_GET(self, req):
         sess = req.getSession()

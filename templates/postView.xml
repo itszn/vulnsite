@@ -39,6 +39,8 @@
         <p>Text posts don't really matter, so knock yourself out.</p>
         <p>I will also make sure to check my messages too. We might even have a nice conversation!</p>
         <p>Other than that, have fun!</p>
+        <h4>Meme Of The Day</h4>
+        <img class="img-responsive img-thumbnail" t:render="meme"><t:attr name="src"><t:slot name="meme" /></t:attr></img>
     </div>
     <script src="/js/vote.js"></script>
 </div>

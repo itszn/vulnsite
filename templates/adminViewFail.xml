@@ -1,0 +1,10 @@
+<div xmlns:t="http://twistedmatrix.com/ns/twisted.web.template/0.1">
+    <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Admin Settings</h3>
+    </div>
+    <div class="panel-body">
+        <div class="alert alert-danger">You must be an admin to view this page!</div>
+    </div>
+    </div>
+</div>

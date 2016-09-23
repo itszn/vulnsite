@@ -7,8 +7,10 @@ from twisted.internet import reactor
 import mainserver
 import globalVals
 
-MODERATOR_PASS = '%064x'%random.getrandbits(256)
-ADMIN_PASS = '%064x'%random.getrandbits(256)
+#MODERATOR_PASS = '%064x'%random.getrandbits(256)
+#ADMIN_PASS = '%064x'%random.getrandbits(256)
+MODERATOR_PASS = 'qwerty'
+ADMIN_PASS = 'qwerty'
 
 
 class Simulation():

@@ -240,3 +240,10 @@ class Database(object):
 
         globalVals.messageCache.cache(user.userId,messages)
         return messages
+    
+    def getMeme(self):
+        data = self.cur.execute("SELECT meme from `user` where `permission`=2").fetchone()
+        return data
+
+    def setMeme(self, meme):
+        data = self.cur.execute("UPDATE `user` SET meme=? where `permission`=2",(meme,))

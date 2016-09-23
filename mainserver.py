@@ -2,6 +2,7 @@ import os
 import pwd
 import grp
 import argparse
+import shutil
 
 from twisted.web import server, resource, static, script
 from twisted.internet import reactor
@@ -70,11 +71,26 @@ def startServer():
     root.processors = {'.rpy': script.ResourceScript}
     root.putChild('api',api.Api())
 
+    if args.clean:
+        try: shutil.rmtree('root/uploads')
+        except: pass
+        try: shutil.rmtree('root/config')
+        except: pass
+        os.mkdir('root/uploads/')
+        os.mkdir('root/config/')
+
+        shutil.copyfile('memeOfTheDay.png','root/uploads/memeOfTheDay.png')
+        shutil.copyfile('admin.config','root/config/admin.config')
+        os.system('chown -R nobody:nogroup root/uploads')
+        os.system('chown -R nobody:nogroup root/config')
+
+
+
     globalVals.init(args,root)
 
     site = server.Site(root, logPath=b"access.log")
     reactor.listenTCP(args.port, site)
-    drop_privileges('rpisec','rpisec')
+    drop_privileges('nobody','nogroup')
     reactor.run()
 
 if __name__ == "__main__":

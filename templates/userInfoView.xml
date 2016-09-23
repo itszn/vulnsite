@@ -4,5 +4,6 @@
 </a></li>
 <li><t:attr name="class"><t:slot name="className" /></t:attr><a href="/messages">Messages <span class="badge">
 <t:slot name="notes" /></span></a></li>
+<li><a href="/admin">Admin Settings</a></li>
 <li><a href="/api/logout">Logout</a></li>
 </ul>

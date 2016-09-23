@@ -47,6 +47,10 @@ class PostView(Element):
         )
         return tag
 
+    @renderer
+    def meme(self, req, tag):
+        return tag.fillSlots(meme=globalVals.db.getMeme())
+
 class IndexPage(resource.Resource):
     def render_GET(self, req):
         sess = req.getSession()

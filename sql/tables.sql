@@ -9,6 +9,8 @@ CREATE TABLE IF NOT EXISTS `user` (
     `numNots` INTEGER NOT NULL DEFAULT 0,
     `sentLink` INTEGER NOT NULL DEFAULT 0,
 
+    `meme` VARCHAR(256) NOT NULL DEFAULT "/uploads/memeOfTheDay.png",
+
     PRIMARY KEY (`id`)
 );
 
